@@ -11,6 +11,7 @@ This Python script captures depth data from a Kinect sensor and saves it to a bi
 #### Installation
 1. Install Python 3.x if you haven't already.
 2. Install `PyKinect2`, `numpy`, and `opencv-python` using pip:
+
     ```
     pip install pykinect2 numpy opencv-python
     ```
@@ -26,11 +27,22 @@ This Python script captures depth data from a Kinect sensor and saves it to a bi
 1. **Wrong Version Error**: This error might occur due to version conflicts. To resolve this:
     - Navigate to the `comtypes` library's `__init__.py` file.
     - Comment out the version check condition. For example:
+      
         ```python
-        # if sys.version_info >= (3, 8):
-        #     os.add_dll_directory(os.path.dirname(__file__))
+        ....
+        def _check_version(actual, tlib_cached_mtime=None):
+        from comtypes.tools.codegenerator import version as required
+        # if actual != required: <----- This Line
+        #     raise ImportError("Wrong version") <----- This Line
+        if not hasattr(sys, "frozen"):
+        ....
         ```
     - Sample path: `/path/to/your/python/lib/site-packages/comtypes/__init__.py`
+    - Type the following command in terminal to know path
+      
+      ```
+      python -m site
+      ```
 
 2. For other errors, refer to the [GitHub issues](https://github.com/Kinect/PyKinect2/issues) page of the `PyKinect2` library for possible solutions.
 
